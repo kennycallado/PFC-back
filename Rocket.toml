@@ -1,0 +1,19 @@
+[debug]
+port = 8000
+
+[release]
+ident = "sensacion_api"
+address = "0.0.0.0"
+port = 80
+
+[default.databases.diesel]
+url = "postgres://sensacion-user:sensacion-pass@localhost/sensacion"
+
+# Para producción usar variables de entorno
+# debe seguir la siguiente estructura:
+# ROCKET_DATABASES={my_db={url="postgres://user:pass@localhost/my_db"}}
+# ROCKET_DATABASES={diesel={url="postgres://user:pass@localhost/my_db"}}
+# ROCKET_ADDRESS="0.0.0.0"
+# ROCKET_PORT="80"
+# ROCKET_SECRETKEY="" <-- resultado de openssl rand -base64 32
+# scretkey no estoy seguro pero sería solo en caso de que use tokens
