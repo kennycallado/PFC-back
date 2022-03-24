@@ -2,33 +2,42 @@ version: "3.1"
 
 services:
   database:
-    image: mariadb:10.3
+    image: postgres:12-alpine
     ports:
-      - "3306:3306"
-    networks:
-      - docker-network
+      - "5432:5432"
     environment:
-      MARIADB_ROOT_PASSWORD: toor
-      MARIADB_USER: sensacion-user
-      MARIADB_PASSWORD: sensacion-pass
-      MARIADB_DATABASE: sensacion
-    # volumes:
-      # - ./database/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
-      # - ./database/db-1-init.sql:/docker-entrypoint-initdb.d/1.sql
-      # - ./database/db-2-admin.sql:/docker-entrypoint-initdb.d/2.sql
-      # - ./database/db-3-data.sql:/docker-entrypoint-initdb.d/3.sql
-    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+      POSTGRES_DB: sensacion
+      POSTGRES_USER: sensacion-user
+      POSTGRES_PASSWORD: sensacion-pass
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    ports:
-      - "8080:80"
-    networks:
-      - docker-network
-    environment:
-      PMA_HOST: database
-    depends_on:
-      - database
+  # database:
+  #   image: mariadb:10.3
+  #   ports:
+  #     - "3306:3306"
+  #   networks:
+  #     - docker-network
+  #   environment:
+  #     MARIADB_ROOT_PASSWORD: toor
+  #     MARIADB_USER: sensacion-user
+  #     MARIADB_PASSWORD: sensacion-pass
+  #     MARIADB_DATABASE: sensacion
+  #   # volumes:
+  #     # - ./database/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+  #     # - ./database/db-1-init.sql:/docker-entrypoint-initdb.d/1.sql
+  #     # - ./database/db-2-admin.sql:/docker-entrypoint-initdb.d/2.sql
+  #     # - ./database/db-3-data.sql:/docker-entrypoint-initdb.d/3.sql
+  #   command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
-networks:
-  docker-network:
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   ports:
+  #     - "8080:80"
+  #   networks:
+  #     - docker-network
+  #   environment:
+  #     PMA_HOST: database
+  #   depends_on:
+  #     - database
+
+# networks:
+#   docker-network:
