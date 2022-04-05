@@ -1,5 +1,5 @@
 -- Your SQL goes here
-CREATE TABLE bookings (
+CREATE TABLE IF NOT EXISTS bookings (
   id SERIAL PRIMARY KEY,
   tables_id SERIAL,
   username VARCHAR NOT NULL,
