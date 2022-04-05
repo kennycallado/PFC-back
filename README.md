@@ -19,3 +19,15 @@ Este módulo del proyecto pretende servir de intermediario entre el módulo de f
 #### Dependencias
 
 ### Uso:
+
+
+# IMPORTANTE
+https://genekuo.medium.com/creating-a-rest-api-in-rust-with-persistence-rust-rocket-and-diesel-a4117d400104
+
+# GIT
+git push origin HEAD:master
+
+## TODO:
+
+- [ ] quizá integrar migraciones al iniciar la base de datos.
+- [ ] debería añadir if not exists al crear las tablas...
