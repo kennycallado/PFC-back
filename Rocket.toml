@@ -8,6 +8,7 @@ port = 8000
 
 [default.databases.diesel]
 url = "postgres://sensacion-user:sensacion-pass@localhost/sensacion"
+# url = "postgres://root:toor@postgresdb/sensacion"
 
 # Para producción usar variables de entorno
 # debe seguir la siguiente estructura:

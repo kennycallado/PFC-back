@@ -4,8 +4,9 @@ mod config;
 mod routes;
 mod server;
 
-/* Expone los elementos en toda la aplicación */
+extern crate openssl; // Necesario para compilar en musl
 
+/* Expone los elementos en toda la aplicación */
 #[macro_use]
 extern crate rocket;
 #[macro_use]
