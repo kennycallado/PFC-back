@@ -1,7 +1,7 @@
 ## IMPORTANTE -> pasos previos v- abajo
 #
 # crear imágen
-# podman build --no-cache --platform linux/arm64 -t kennycallado/sensacion_api:v4-slim-arm64 .
+# podman build --no-cache --pull --platform linux/arm64 -t kennycallado/sensacion_api:v4-slim-arm64 .
 
 # FROM alpine:latest
 FROM busybox:latest
