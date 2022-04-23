@@ -25,7 +25,10 @@ Este módulo del proyecto pretende servir de intermediario entre el módulo de f
 https://genekuo.medium.com/creating-a-rest-api-in-rust-with-persistence-rust-rocket-and-diesel-a4117d400104
 
 # GIT
+
+``` bash
 git push origin HEAD:master
+```
 
 ## TODO:
 
