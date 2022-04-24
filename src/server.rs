@@ -1,5 +1,6 @@
 // use rocket::fairing::AdHoc;
 
+use crate::config::cors;
 use crate::config::database;
 use crate::routes;
 
@@ -10,6 +11,7 @@ pub fn rocket() -> _ {
         .attach(routes::router())
         // Ingresa la conexión con base de datos
         .attach(database::Db::fairing())
+        .attach(cors::CORS)
     // Ejecuta las migraciones
     // .attach(AdHoc::on_ignite(
     //     "Diesel Migrations",
