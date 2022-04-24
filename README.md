@@ -6,6 +6,14 @@ Este repositorio es parte del proyecto final de ciclo.
 
 Este módulo del proyecto pretende servir de intermediario entre el módulo de font-end y la base de datos. Se entiende como _api_ de la aplicación, definiendo una serie de reglas de comunicación y trasmitiendo la información en formato _json_.
 
+He procurado seguir el patrón MVC [link](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) con repositorio para organizar el código. Los ficheros de configuración del proyecto residen en el directorio raíz, así como las migraciones. Dentro del directorio _src_ está la aplicación en sí. Contiene el fichero _main.rs_ desde donde se inicia la ejecución, el fichero _server.rs_ que agrega la configuración e inicia el servidor http y el fichero _routes.rs_ que especifica las rutas cubiertas por el servidor.
+
+El directorio _config_ recibe la configuración propia de la aplicación, como la base de datos que posteriormente es usada en _server.rs_.
+
+Finalmente el directorio _app_ que contiene la lógica de la aplicación distribuida en los directorios _controllers_, _models_ y repositories_. Cada uno cumple las funciones determinadas del patrón de diseño.
+
+Los ficheros _mod.rs_ son usados por _Rust_ para hacer público los módulos contenidos en el directorio.
+
 ### Tecnologías
 
 - Rust
@@ -62,7 +70,7 @@ docker-compose up -d
 docker-compose down
  ```
 
- Este manifiesto está configurado para coincidir con las credenciales de conexión que usa el proyecto por defecto. En caso de no usar este método debe tenerse postgres instalado y tener en cuenta el siguiente punto.
+ Este manifiesto (_compose.yml_) está configurado para coincidir con las credenciales de conexión que usa el proyecto por defecto. En caso de no usar este método debe tenerse postgres instalado y tener en cuenta el siguiente punto.
 
 #### Postgres
 
@@ -71,6 +79,27 @@ Las credenciales de conexión con la base de datos deben configurarse en el fich
 ``` toml
 [default.databases.diesel]
 url = "postgres://{user}:{password}@{host}/{db}"
+```
+
+Para completar la base de datos con las tablas requeridas debe ejecutarse el siguiente script hacia la base de datos creada:
+
+``` sql
+CREATE TABLE IF NOT EXISTS tables (
+  id SERIAL PRIMARY KEY,
+  description VARCHAR NOT NULL,
+  max_people INTEGER NOT NULL,
+  min_people INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS bookings (
+  id SERIAL PRIMARY KEY,
+  tables_id SERIAL,
+  username VARCHAR NOT NULL,
+  people INTEGER NOT NULL,
+  date_book VARCHAR NOT NULL,
+  CONSTRAINT fk_book_table
+    FOREIGN KEY(tables_id) REFERENCES tables(id)
+);
 ```
 
 #### Migraciones
@@ -107,7 +136,7 @@ Ahora para ejecutar la aplicación debe hacerse desde la ubicación donde esté 
 
 Esto inicia el servidor y queda a la escucha de peticiones y si no se han realizado modificaciones en el fichero de configuración escuchará en el puerto _8000_. Se muestra en consola las rutas y otros datos importantes.
 
-En caso de no mostrarse nada el problema suele ser que la no se ha iniciado la base de datos.
+En caso de no mostrarse nada el problema suele ser que no se ha iniciado la base de datos.
 
 ## Imagen para producción
 
@@ -132,7 +161,7 @@ Desde la raíz del proyecto ejecutar el siguiente comando:
 ``` bash
 docker run --rm -it -v $(pwd):/home/rust/src ekidd/rust-musl-builder
 ```
-Este comando iniciará un contenedor en modo interactivo con un sistema preparado para compilar el proyecto con _musl_. Por seguridad se ejecuta sin privilegios de administrador, por lo que este punto podría concederse permisos para que pueda guardar la compilación.
+Este comando iniciará un contenedor en modo interactivo con un sistema preparado para compilar el proyecto con _musl_. Por seguridad se ejecuta sin privilegios de administrador, por lo que en este punto, podría concederse permisos para que pueda guardar la compilación.
 
 ``` bash
 sudo chmod -R o+w target
@@ -156,13 +185,13 @@ Nótese que he usado un tag relativo a mi cuenta en https://hub.docker.com.
 
 ### Registro remoto
 
-Para que el resultado de todos estos pasos previos sea accesible desde cualquier punto usaré el registro de imágenes oficial de docker, y para ello debe ejecutar el siguiente comando:
+Para que el resultado de todos estos pasos previos sea accesible desde cualquier punto, usaré el registro de imágenes oficial de docker, y para ello debe ejecutar el siguiente comando:
 
 ``` bash
 podman push --format docker kennycallado/sensacion_api:vX-slim-arm64
 ```
 
-Para que funcione previamente ha de realizar el registro de entrada con las credenciales oportunas:
+Para que funcione previamente ha de realizar el login con las credenciales oportunas:
 
 ``` bash
 podman login
