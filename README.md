@@ -81,6 +81,24 @@ Las credenciales de conexión con la base de datos deben configurarse en el fich
 url = "postgres://{user}:{password}@{host}/{db}"
 ```
 
+#### Migraciones
+
+En caso de haber instalado el cli de diesel, debe existir una variable de entorno con la url de conexión _DATABASE\_URL_ o un fichero _.env_ con esta misma información.
+
+``` bash
+DATABASE_URL=postgres://{user}:{password}@{host}/{db}
+```
+
+Con esto solo resta ejecutar las migraciones con el siguiente comando:
+
+``` bash
+diesel migration run
+```
+
+Este comando puebla la base de datos con las tablas necesarias, así como una función de diesel que le permite seguir las migraciones ejecutadas.
+
+### Alternativa migraciones
+
 Para completar la base de datos con las tablas requeridas debe ejecutarse el siguiente script hacia la base de datos creada:
 
 ``` sql
@@ -102,22 +120,6 @@ CREATE TABLE IF NOT EXISTS bookings (
 );
 ```
 
-#### Migraciones
-
-En caso de haber instalado el cli de diesel, debe existir una variable de entorno con la url de conexión _DATABASE\_URL_ o un fichero _.env_ con esta misma información.
-
-``` bash
-DATABASE_URL=postgres://{user}:{password}@{host}/{db}
-```
-
-Con esto solo resta ejecutar las migraciones con el siguiente comando:
-
-``` bash
-diesel migration run
-```
-
-Este comando puebla la base de datos con las tablas necesarias, así como una función de diesel que le permite seguir las migraciones ejecutadas.
-
 ### Compilación
 
 Para compilar el proyecto debe ejecutarse el siguiente comando que se encargará de resolver las dependencias, compilarlas y finalmente compilar el binario de la aplicación:
@@ -131,7 +133,7 @@ cargo build --release
 Ahora para ejecutar la aplicación debe hacerse desde la ubicación donde esté el fichero _Rocket.toml_ de donde se tomarán la url de conexión con la base de datos. Por ejemplo, estando en la raíz del proyecto (donde reside dicho fichero) puede ejecutarse:
 
 ```
-./target/release/sensacion
+target/release/sensacion
 ```
 
 Esto inicia el servidor y queda a la escucha de peticiones y si no se han realizado modificaciones en el fichero de configuración escuchará en el puerto _8000_. Se muestra en consola las rutas y otros datos importantes.
