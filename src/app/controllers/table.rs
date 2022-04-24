@@ -47,7 +47,7 @@ pub async fn available_tables(db: Db, date: String) -> Json<Vec<Table>> {
     let ids_occuped: Vec<i32> = bookings_repo::occuped_tables(db, date).await;
 
     if ids_occuped.len() > 0 {
-        tables.retain(|table| ids_occuped.iter().any(|&x| x != table.id));
+        tables.retain(|table| !ids_occuped.contains(&table.id))
     }
 
     Json(tables)
