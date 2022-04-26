@@ -21,6 +21,8 @@ pub fn router() -> AdHoc {
                     table_controller::destroy,
                     table_controller::update,
                     table_controller::available_tables,
+                    table_controller::log_store_table,
+                    table_controller::log_update_table,
                 ],
             )
             .mount(
@@ -31,6 +33,8 @@ pub fn router() -> AdHoc {
                     booking_controller::store,
                     booking_controller::destroy,
                     booking_controller::update,
+                    booking_controller::log_store_booking,
+                    booking_controller::log_update_booking,
                 ],
             )
     })

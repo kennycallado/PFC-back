@@ -19,6 +19,11 @@ pub async fn show(db: Db, id: i32) -> Json<Booking> {
     Json(booking)
 }
 
+#[options("/")]
+pub async fn log_store_booking() {
+    println!("Agrega una reserva - ??")
+}
+
 #[post("/", format = "application/json", data = "<data>")]
 pub async fn store(db: Db, data: Json<NewBookings>) -> Json<Booking> {
     let booking: Booking = bookings_repo::save(db, data.clone()).await;
@@ -31,6 +36,11 @@ pub async fn destroy(db: Db, id: i32) -> Json<Booking> {
     let booking: Booking = bookings_repo::remove(db, id).await;
 
     Json(booking)
+}
+
+#[options("/<id>")]
+pub async fn log_update_booking(id: i32) {
+    println!("Actualiza una mesa - {}", id);
 }
 
 #[put("/<id>", format = "application/json", data = "<data>")]

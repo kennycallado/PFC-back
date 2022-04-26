@@ -20,6 +20,11 @@ pub async fn show(db: Db, id: i32) -> Json<Table> {
     Json(table)
 }
 
+#[options("/")]
+pub async fn log_store_table() {
+    println!("Agrega una mesa - ??");
+}
+
 #[post("/", format = "application/json", data = "<data>")]
 pub async fn store(db: Db, data: Json<NewTable>) -> Json<Table> {
     let table: Table = tables_repo::save(db, data.clone()).await;
@@ -32,6 +37,11 @@ pub async fn destroy(db: Db, id: i32) -> Json<Table> {
     let table: Table = tables_repo::remove(db, id).await;
 
     Json(table)
+}
+
+#[options("/<id>")]
+pub async fn log_update_table(id: i32) {
+    println!("Actualiza una mesa - {}", id);
 }
 
 #[put("/<id>", format = "application/json", data = "<data>")]
