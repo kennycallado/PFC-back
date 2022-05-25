@@ -1,0 +1,9 @@
+FROM busybox:latest
+
+COPY ./target/release/sensacion /bin/sensacion
+# COPY --from=builder /home/rust/src/target/x86_64-unknown-linux-musl/release/sensacion /bin/sensacion
+COPY ./Rocket.toml /root
+
+WORKDIR /root
+
+CMD [ "sensacion" ]
